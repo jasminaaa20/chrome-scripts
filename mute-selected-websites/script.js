@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Auto Mute Specified Websites
+// @name         Auto Mute New Tabs
 // @namespace    https://example.com/
-// @version      1.0
-// @description  Automatically mutes specified websites when opened.
+// @version      1.1
+// @description  Mutes specified websites on tab startup without remuting after manual unmute.
 // @match        *://*/*
 // @grant        none
 // ==/UserScript==
@@ -10,7 +10,7 @@
 (function() {
     'use strict';
 
-    // List of websites to mute (add more sites as needed)
+    // List of websites to mute (modify this list as needed)
     const mutedSites = [
         "youtube.com",
         "facebook.com",
@@ -22,31 +22,23 @@
     }
 
     function muteTab() {
-        let video = document.querySelector("video");
-        let audio = document.querySelector("audio");
+        if (document.hidden) return; // Ensures the script runs only when the page is visible
 
-        if (video) {
-            video.muted = true;
-        }
-
-        if (audio) {
+        // Mute the entire tab
+        try {
+            let stream = new AudioContext().createMediaStreamDestination();
+            let audio = new Audio();
+            audio.srcObject = stream.stream;
             audio.muted = true;
-        }
+        } catch (e) {}
 
-        // Try muting the tab if possible (only works in some browsers)
-        if (typeof document.hidden !== "undefined") {
-            let iframe = document.createElement("iframe");
-            iframe.style.display = "none";
-            document.body.appendChild(iframe);
-            iframe.contentWindow.postMessage({ type: "mute" }, "*");
-        }
+        // Mute video and audio elements in the page
+        document.querySelectorAll("video, audio").forEach(media => media.muted = true);
     }
 
-    // Check if the current site should be muted
+    // Run once when the page loads
     if (shouldMute(window.location.href)) {
         muteTab();
-
-        // Re-check periodically in case a video/audio starts playing later
-        setInterval(muteTab, 2000);
     }
+
 })();
