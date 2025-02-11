@@ -1,30 +1,33 @@
 # Auto Mute Specified Websites
 
 ## Description
-This script is designed for use with userscript managers like **ViolentMonkey**, **TamperMonkey**, or **Greasemonkey**. It automatically mutes tabs when you open specific websites listed in the script.
+This userscript is designed to mute specified websites **only on startup**, allowing you to manually unmute them if needed. It works with userscript managers like **ViolentMonkey**, **TamperMonkey**, and **Greasemonkey**.
 
 ## Features
-- Automatically mutes specified websites.
-- Works on most modern browsers that support userscripts.
-- Periodically checks and mutes any late-loaded media elements.
+- Mutes specified websites **only when the tab loads**.
+- Allows manual unmuting without reapplying mute.
+- Works on most modern browsers.
+- Simple setup and customization.
 
 ## Installation
-1. Install a userscript manager such as:
+1. Install a userscript manager:
    - [ViolentMonkey](https://violentmonkey.github.io/)
    - [TamperMonkey](https://www.tampermonkey.net/)
    - [Greasemonkey](https://www.greasespot.net/)
-2. Click on `New Script` in your userscript manager.
+2. Create a **new script** in your userscript manager.
 3. Copy and paste the content in the `script.js` file
 4. Save and enable the script.
-5. Open a website listed in the script and it will be muted automatically.
+5. Modify the `mutedSites` list to add or remove websites.
+
+## How to Unmute a Tab
+- **Chrome/Edge**: Right-click the tab → Select **"Unmute site"** or **"Unmute tab"**.
+- **Firefox**: Click the **🔊 speaker icon** on the tab.
+- **Opera**: Right-click the tab → Select **"Unmute tab"**.
+- **Safari**: Click the **🔊 speaker icon** in the address bar or tab.
 
 ## Customization
-- Edit the `mutedSites` array in the script to include or remove websites as needed.
-- Modify the `setInterval(muteTab, 2000);` if you want to adjust how often the script checks for media elements.
-
-## Notes
-- Some browsers may restrict tab-wide muting, but individual media elements will still be muted.
-- The script is designed for simple usage and may require permissions depending on your browser.
+- Edit the `mutedSites` array in the script to include or remove websites.
+- The script only mutes the tab **once on load**, so it won’t interfere with manual unmuting.
 
 ## License
 This script is provided as-is under the MIT License. Feel free to modify and share it.
