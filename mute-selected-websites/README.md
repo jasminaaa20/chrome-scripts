@@ -18,9 +18,6 @@ This userscript automatically mutes all videos and audio on specific websites wh
 ## **Supported Websites**
 The script currently auto-mutes the following websites:
 - YouTube
-- Facebook
-- Twitter
-- TikTok
 
 To add more websites, edit the `@match` rules in the script.
 
