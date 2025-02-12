@@ -1,38 +1,48 @@
-# **Auto-Mute Websites Userscript**
+## **Auto-Mute Websites (Violentmonkey/Tampermonkey Script)**
+This userscript **automatically mutes videos and audio** on specific websites but allows you to unmute them manually.  
 
-## **Description**
-This userscript automatically mutes all videos and audio on specific websites when they load. It works with **Violentmonkey** (or **Tampermonkey**) and ensures that media elements start muted, while still allowing you to unmute them manually via the browser UI.
+### **🚀 Features**
+- ✅ **Mutes media by default** on predefined websites.
+- ✅ **Allows manual unmuting**—won’t force mute again if you unmute.
+- ✅ **Works with dynamically loaded media** (e.g., infinite scroll, autoplay).
+- ✅ **Lightweight & efficient**, using a MutationObserver.
 
-## **Features**
-✅ Mutes media (`<video>` and `<audio>`) on predefined websites  
-✅ Works on dynamically loaded content (e.g., YouTube, TikTok)  
-✅ Allows manual unmuting via the browser UI  
-✅ Lightweight and runs efficiently  
+### **📌 Supported Websites**
+By default, this script mutes videos/audio on:
+- **YouTube**
+- **Facebook**
+- **Twitter**
+- **TikTok**
 
-## **Installation**
-1. Install [Violentmonkey](https://violentmonkey.github.io/) or [Tampermonkey](https://www.tampermonkey.net/) in your browser.
-2. Create a new script in the extension's dashboard.
-3. Copy and paste the script into the editor.
+You can add more websites by modifying the `@match` rules.
+
+### **📦 Installation**
+1. Install **[Violentmonkey](https://violentmonkey.github.io/)** or **Tampermonkey** in your browser.
+2. Create a **new userscript**.
+3. Copy & paste the script into the editor.
 4. Save and enable the script.
 
-## **Supported Websites**
-The script currently auto-mutes the following websites:
-- YouTube
-
-To add more websites, edit the `@match` rules in the script.
-
-## **How It Works**
-- When you visit a matched website, all `<video>` and `<audio>` elements will be muted by default.
-- The script continuously monitors the page for new media and mutes them automatically.
-- You can still **unmute manually** using the browser’s built-in controls.
-
-## **Customization**
-To mute additional websites, simply edit the script and add more `@match` rules:
-
+### **⚙️ Customization**
+To **add more websites**, edit the script and add new `@match` rules:
 ```javascript
+// @match        *://*.spotify.com/*
 // @match        *://*.example.com/*
 ```
 
-## **Limitations**
-- This script **only mutes media elements**, not the entire tab.
-- It **does not use `chrome.tabs.update`**, as userscripts don’t have access to Chrome’s extension APIs.
+### **📢 How It Works**
+1. Videos and audio **start muted** on supported websites.
+2. **Manually unmute** using the browser UI.
+3. The script **remembers your choice** and won’t re-mute manually unmuted videos.
+
+### **🤖 Technical Details**
+- Uses `MutationObserver` to detect and mute new media elements.
+- Listens for `volumechange` events to **detect manual unmuting**.
+- Uses a `WeakSet` to **track unmuted videos** and prevent re-muting.
+
+### **💡 Notes**
+- This script **only mutes videos & audio**, it does **not** mute entire tabs.
+- **You can still use the browser's built-in tab mute function** if needed.
+
+### **🛠️ Future Improvements**
+- Add a toggle option to disable/enable muting per website.
+- Support for additional media elements.
