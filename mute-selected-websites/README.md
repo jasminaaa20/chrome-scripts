@@ -1,35 +1,41 @@
-# Auto Mute Specified Websites
+# **Auto-Mute Websites Userscript**
 
-## Description
-This userscript is designed to mute specified websites **only on startup**, allowing you to manually unmute them if needed. It works with userscript managers like **ViolentMonkey**, **TamperMonkey**, and **Greasemonkey**.
+## **Description**
+This userscript automatically mutes all videos and audio on specific websites when they load. It works with **Violentmonkey** (or **Tampermonkey**) and ensures that media elements start muted, while still allowing you to unmute them manually via the browser UI.
 
-## Features
-- Mutes specified websites **only when the tab loads**.
-- Allows manual unmuting without reapplying mute.
-- Works on most modern browsers.
-- Simple setup and customization.
+## **Features**
+✅ Mutes media (`<video>` and `<audio>`) on predefined websites  
+✅ Works on dynamically loaded content (e.g., YouTube, TikTok)  
+✅ Allows manual unmuting via the browser UI  
+✅ Lightweight and runs efficiently  
 
-## Installation
-1. Install a userscript manager:
-   - [ViolentMonkey](https://violentmonkey.github.io/)
-   - [TamperMonkey](https://www.tampermonkey.net/)
-   - [Greasemonkey](https://www.greasespot.net/)
-2. Create a **new script** in your userscript manager.
-3. Copy and paste the content in the `script.js` file
+## **Installation**
+1. Install [Violentmonkey](https://violentmonkey.github.io/) or [Tampermonkey](https://www.tampermonkey.net/) in your browser.
+2. Create a new script in the extension's dashboard.
+3. Copy and paste the script into the editor.
 4. Save and enable the script.
-5. Modify the `mutedSites` list to add or remove websites.
 
-## How to Unmute a Tab
-- **Chrome/Edge**: Right-click the tab → Select **"Unmute site"** or **"Unmute tab"**.
-- **Firefox**: Click the **🔊 speaker icon** on the tab.
-- **Opera**: Right-click the tab → Select **"Unmute tab"**.
-- **Safari**: Click the **🔊 speaker icon** in the address bar or tab.
+## **Supported Websites**
+The script currently auto-mutes the following websites:
+- YouTube
+- Facebook
+- Twitter
+- TikTok
 
-## Customization
-- Edit the `mutedSites` array in the script to include or remove websites.
-- The script only mutes the tab **once on load**, so it won’t interfere with manual unmuting.
+To add more websites, edit the `@match` rules in the script.
 
-## License
-This script is provided as-is under the MIT License. Feel free to modify and share it.
+## **How It Works**
+- When you visit a matched website, all `<video>` and `<audio>` elements will be muted by default.
+- The script continuously monitors the page for new media and mutes them automatically.
+- You can still **unmute manually** using the browser’s built-in controls.
 
-Enjoy a quieter browsing experience! 🚀
+## **Customization**
+To mute additional websites, simply edit the script and add more `@match` rules:
+
+```javascript
+// @match        *://*.example.com/*
+```
+
+## **Limitations**
+- This script **only mutes media elements**, not the entire tab.
+- It **does not use `chrome.tabs.update`**, as userscripts don’t have access to Chrome’s extension APIs.
