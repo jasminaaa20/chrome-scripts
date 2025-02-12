@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Auto-Mute Websites
+// @name         Auto-Mute Websites (Allows Unmuting)
 // @namespace    http://tampermonkey.net/
-// @version      1.0
-// @description  Automatically mutes predefined websites
+// @version      1.1
+// @description  Automatically mutes predefined websites but allows manual unmuting
 // @author       You
 // @match        *://*.youtube.com/*
 // @match        *://*.facebook.com/*
@@ -14,9 +14,21 @@
 (function () {
     'use strict';
 
+    // Store user-unmuted videos to prevent remuting
+    let unmutedVideos = new WeakSet();
+
     function muteMedia() {
         document.querySelectorAll('video, audio').forEach(media => {
-            media.muted = true;
+            if (!unmutedVideos.has(media)) {
+                media.muted = true;
+            }
+
+            // Listen for manual unmute
+            media.addEventListener('volumechange', function () {
+                if (!media.muted) {
+                    unmutedVideos.add(media); // Mark as user-unmuted
+                }
+            });
         });
     }
 
@@ -25,9 +37,9 @@
         observer.observe(document.body, { childList: true, subtree: true });
     }
 
-    // Mute existing media
+    // Initial mute
     muteMedia();
 
-    // Observe and mute dynamically loaded media
+    // Observe changes
     observeDOMChanges();
 })();
